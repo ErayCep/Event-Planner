@@ -17,15 +17,15 @@ import org.slf4j.LoggerFactory;
 import ch.qos.logback.classic.Logger;
 /**
 
-@class Calculator
-@brief This class represents a Calculator that performs mathematical operations.
-@details The Calculator class provides methods to perform mathematical operations such as addition, subtraction, multiplication, and division. It also supports logging functionality using the logger object.
-@author ugur.coruh
+@class Event
+@brief This class represents a Event that performs mathematical operations.
+@details The Event class provides methods to perform . It also supports logging functionality using the logger object.
+@author eray.cepni
 */
 public class Event {
 
   /**
-   * @brief Logger for the Calculator class.
+   * @brief Logger for the Event class.
    */
   private static final Logger logger = (Logger) LoggerFactory.getLogger(Event.class);
 
