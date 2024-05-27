@@ -1,0 +1,26 @@
+namespace main.lib;
+
+class Event {
+  String name;
+  String date;
+  String location;
+  String description;
+  * -- * Attendee;
+  * -- * Schedule;
+}
+
+class Attendee {
+  String name;
+  String email;
+}
+
+class Schedule {
+  String activity;
+  String time;
+}
+
+class Feedback {
+  String attendeeName;
+  String comments;
+  Integer rating;
+}
