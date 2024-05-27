@@ -1,6 +1,6 @@
 /**
 
-@file Calculator.java
+@file event.java
 @brief This file serves as a demonstration file for the Calculator class.
 @details This file contains the implementation of the Calculator class, which provides various mathematical operations.
 */
@@ -10,7 +10,7 @@
 @package com.ucoruh.calculator
 @brief The com.ucoruh.calculator package contains all the classes and files related to the Calculator App.
 */
-package com.ucoruh.calculator;
+package com.ucoruh.event;
 
 import org.slf4j.LoggerFactory;
 
@@ -22,12 +22,12 @@ import ch.qos.logback.classic.Logger;
 @details The Calculator class provides methods to perform mathematical operations such as addition, subtraction, multiplication, and division. It also supports logging functionality using the logger object.
 @author ugur.coruh
 */
-public class Calculator {
+public class Event {
 
   /**
    * @brief Logger for the Calculator class.
    */
-  private static final Logger logger = (Logger) LoggerFactory.getLogger(Calculator.class);
+  private static final Logger logger = (Logger) LoggerFactory.getLogger(Event.class);
 
   /**
    * @brief Calculates the sum of two integers.

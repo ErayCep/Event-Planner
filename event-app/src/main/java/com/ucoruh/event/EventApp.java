@@ -1,15 +1,15 @@
 /**
 
-@file CalculatorApp.java
+@file eventApp.java
 @brief This file serves as the main application file for the Calculator App.
 @details This file contains the entry point of the application, which is the main method. It initializes the necessary components and executes the Calculator App.
 */
 /**
 
-@package com.ucoruh.calculator
+@package com.ucoruh.event
 @brief The com.ucoruh.calculator package contains all the classes and files related to the Calculator App.
 */
-package com.ucoruh.calculator;
+package com.ucoruh.event;
 
 import java.io.IOException;
 
@@ -27,11 +27,11 @@ import ch.qos.logback.classic.Logger;
  *          and handles exceptions.
  * @author ugur.coruh
  */
-public class CalculatorApp {
+public class EventApp {
   /**
    * @brief Logger for the CalculatorApp class.
    */
-  private static final Logger logger = (Logger) LoggerFactory.getLogger(CalculatorApp.class);
+  private static final Logger logger = (Logger) LoggerFactory.getLogger(EventApp.class);
 
   /**
    * @brief The main entry point of the Calculator App.
