@@ -24,12 +24,23 @@ import java.sql.Statement;
  * @author eray.cepni,eren.sisman
  */
 public class UserDAO {
+	  /**
+	   * @brief connect Connection to database.
+	   */
 	private Connection connection;
 	
+    /**
+     * @brief This constructor creates an user database connection.
+     * @details This constructor creates an user database connection.
+     */
     public UserDAO() {
         connection = DatabaseConnection.getInstance().getConnection();
     }
     
+    /**
+     * @brief This method registers new user.
+     * @param user User to register
+     */
     public void registerUser(User user) {
         String sql = "INSERT INTO users(username, password) VALUES(?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -41,6 +52,11 @@ public class UserDAO {
         }
     }
     
+    /**
+     * @brief This method logins the user.
+     * @param user User to login
+     * @return True if login was successful, false if not
+     */
     public boolean loginUser(User user) {
     	String password = getPassword(user.getUsername());
     	if (password.equals(user.getPassword())) {
@@ -50,6 +66,11 @@ public class UserDAO {
     	return false;
     }
     
+    /**
+     * @brief This method gets the password of the given user.
+     * @param username User name of the user
+     * @return Password of the user
+     */
     public String getPassword(String username) {
     	String sql = "SELECT username, password FROM users WHERE username = ?";
     	try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
