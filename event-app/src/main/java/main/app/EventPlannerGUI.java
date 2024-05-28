@@ -85,29 +85,6 @@ public class EventPlannerGUI {
 
 			            }
 			        });
-
-			
-			        /* REGISTERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR 
-			         * 
-			         * ERAY
-			         * ERAY
-			         * 
-			 
-			        JButton registerAttendeeButton = new JButton("Register Attendee");
-			        registerAttendeeButton.addActionListener(new ActionListener() {
-			            @Override
-			            public void actionPerformed(ActionEvent e) {
-			                Attendee attendee = new Attendee("John Doe", "john@example.com");
-			                eventFacade.registerAttendee(attendee);
-			                JOptionPane.showMessageDialog(newFrame, "Attendee Registered!");
-			            }
-			        }); 
-			        
-						        newFrame.getContentPane().add(registerAttendeeButton);
-						        
-						        
-			        */
-			
 			        
 			        JButton listEventsButton = new JButton("List Events"); // Eklendi
 			        listEventsButton.addActionListener(new ActionListener() { // Eklendi
@@ -189,36 +166,6 @@ public class EventPlannerGUI {
         frame.getContentPane().add(loginButton);
         frame.setLayout(new java.awt.FlowLayout());
         frame.setVisible(true);
-    	
-    	if (loggedIn) {
-    		JFrame newFrame = new JFrame("Event Planner");
-	        newFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	        newFrame.setSize(400, 400);
-	
-	        JButton createEventButton = new JButton("Create Event");
-	        createEventButton.addActionListener(new ActionListener() {
-	            @Override
-	            public void actionPerformed(ActionEvent e) {
-	                Event event = new Event("Sample Event", "2024-05-30", "Sample Location", "Sample Description");
-	                eventFacade.createEvent(event);
-	                JOptionPane.showMessageDialog(newFrame, "Event Created!");
-	            }
-	        });
-	
-	        JButton registerAttendeeButton = new JButton("Register Attendee");
-	        registerAttendeeButton.addActionListener(new ActionListener() {
-	            @Override
-	            public void actionPerformed(ActionEvent e) {
-	                Attendee attendee = new Attendee("John Doe", "john@example.com");
-	                eventFacade.registerAttendee(attendee);
-	                JOptionPane.showMessageDialog(newFrame, "Attendee Registered!");
-	            }
-	        });
-	
-	        newFrame.getContentPane().add(createEventButton);
-	        newFrame.getContentPane().add(registerAttendeeButton);
-	        newFrame.setLayout(new java.awt.FlowLayout());
-	        newFrame.setVisible(true);
-    	}
+
     }
 }
