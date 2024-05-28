@@ -1,0 +1,97 @@
+@startuml
+' Context Diagram
+!define RECTANGLE class
+RECTANGLE User {
+  + userId : String
+  + email : String
+  + password : String
+  + authenticate() : boolean
+}
+
+RECTANGLE EventPlannerApp {
+  + createEvent(event: Event) : void
+  + registerAttendee(attendee: Attendee) : void
+  + listEvents() : List<Event>
+}
+
+RECTANGLE EventPlannerDatabase {
+  + storeEvent(event: Event) : void
+  + getAllEvents() : List<Event>
+}
+
+User --> EventPlannerApp : uses
+EventPlannerApp --> EventPlannerDatabase : reads/writes
+
+' Container Diagram
+!define RECTANGLE class
+RECTANGLE GUI {
+  + display() : void
+}
+
+RECTANGLE EventFacade {
+  + createEvent(event: Event) : void
+  + registerAttendee(attendee: Attendee) : void
+  + listEvents() : List<Event>
+}
+
+RECTANGLE DatabaseConnection {
+  + getConnection() : Connection
+}
+
+GUI --> EventFacade : interacts
+EventFacade --> DatabaseConnection : reads/writes
+
+' Component Diagram
+!define RECTANGLE class
+RECTANGLE EventPlannerGUI {
+  + createAndShowGUI() : void
+}
+
+RECTANGLE EventFacade {
+  + createEvent(event: Event) : void
+  + registerAttendee(attendee: Attendee) : void
+  + listEvents() : List<Event>
+}
+
+RECTANGLE EventDAO {
+  + createEvent(event: Event) : void
+  + getAllEvents() : List<Event>
+}
+
+RECTANGLE DatabaseConnection {
+  + getConnection() : Connection
+}
+
+EventPlannerGUI --> EventFacade : interacts
+EventFacade --> EventDAO : uses
+EventDAO --> DatabaseConnection : connects to
+
+' Code Diagram
+!define RECTANGLE class
+RECTANGLE Event {
+  + name : String
+  + date : String
+  + location : String
+  + description : String
+}
+
+RECTANGLE Attendee {
+  + name : String
+  + email : String
+}
+
+RECTANGLE Schedule {
+  + activity : String
+  + time : String
+}
+
+RECTANGLE Feedback {
+  + attendeeName : String
+  + comments : String
+  + rating : Integer
+}
+
+Event *-- Attendee : contains
+Event *-- Schedule : contains
+Event *-- Feedback : contains
+@enduml

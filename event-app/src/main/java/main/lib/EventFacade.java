@@ -1,5 +1,7 @@
 package main.lib;
 
+import java.util.List;
+
 public class EventFacade {
     private static EventFacade instance;
 
@@ -36,5 +38,12 @@ public class EventFacade {
 
     public void collectFeedback(Feedback feedback) {
         feedbackDAO.collectFeedback(feedback);
+    }
+    public List<Event> getAllEvents() { // Eklendi
+        return eventDAO.getAllEvents(); // Eklendi
+    }
+    
+    public List<Schedule> getAllSchedules() { // Eklendi
+        return scheduleDAO.getAllSchedules(); // Eklendi
     }
 }

@@ -2,7 +2,10 @@ package main.lib;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ScheduleDAO {
     private Connection connection;
@@ -21,4 +24,20 @@ public class ScheduleDAO {
             e.printStackTrace();
         }
     }
+    
+    public List<Schedule> getAllSchedules() { // Eklendi
+        List<Schedule> schedules = new ArrayList<>(); // Eklendi
+        String sql = "SELECT * FROM schedules"; // Eklendi
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) { // Eklendi
+            ResultSet rs = pstmt.executeQuery(); // Eklendi
+            while (rs.next()) { // Eklendi
+                Schedule schedule = new Schedule(rs.getString("activity"), // Eklendi
+                        rs.getString("time")); // Eklendi
+                schedules.add(schedule); // Eklendi
+            } // Eklendi
+        } catch (SQLException e) { // Eklendi
+            e.printStackTrace(); // Eklendi
+        } // Eklendi
+        return schedules; // Eklendi
+    } // Eklendi
 }
