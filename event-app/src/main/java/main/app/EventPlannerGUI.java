@@ -32,12 +32,14 @@ public class EventPlannerGUI {
 		usernameField.setBounds(100, 20, 165, 25);
 		JLabel usernameLabel = new JLabel("Username");
 		usernameLabel.setBounds(10, 20, 80, 25);
+		usernameField.setName("usernameField"); 
 		frame.add(usernameLabel);
 		
 		JTextField passwordField = new JTextField(20);
 		passwordField.setBounds(100, 50, 165, 25);
 		JLabel passwordLabel = new JLabel("Password");
 		passwordField.setBounds(10, 50, 80, 25);
+		passwordField.setName("passwordField");
 		frame.add(passwordLabel);
 		
 		JButton loginButton = new JButton("Login");
@@ -60,11 +62,15 @@ public class EventPlannerGUI {
 			            public void actionPerformed(ActionEvent e) {
 			                // Etkinlik oluşturma parametrelerini girmek için diyalog penceresi // Eklendi
 			                JTextField eventNameField = new JTextField(10); // Eklendi
+			                eventNameField.setName("eventNameField"); // Eklendi
 			                JTextField eventDateField = new JTextField(10); // Eklendi
+			                eventDateField.setName("eventDateField"); // Eklendi
 			                JTextField eventLocationField = new JTextField(10); // Eklendi
+			                eventLocationField.setName("eventLocationField"); // Eklendi
 			                JTextField eventDescriptionField = new JTextField(10); // Eklendi
-
+			                eventDescriptionField.setName("eventDescriptionField"); // Eklendi
 			                JPanel panel = new JPanel(); // Eklendi
+			                panel.setName("eventPanel"); // Eklendi
 			                panel.add(new JLabel("Event Name:")); // Eklendi
 			                panel.add(eventNameField); // Eklendi
 			                panel.add(new JLabel("Event Date:")); // Eklendi
@@ -86,7 +92,7 @@ public class EventPlannerGUI {
 			            }
 			        });
 			        
-			        JButton listEventsButton = new JButton("List Events"); // Eklendi
+			        JButton listEventsButton = new JButton("List Events"); // Ekle
 			        listEventsButton.addActionListener(new ActionListener() { // Eklendi
 			            @Override // Eklendi
 			            public void actionPerformed(ActionEvent e) { // Eklendi

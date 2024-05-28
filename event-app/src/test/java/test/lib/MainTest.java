@@ -44,6 +44,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import main.app.EventPlannerGUI;
+import main.lib.Event;
+import main.lib.EventFacade;
+import org.junit.Before;
+import org.junit.Test;
+
+import javax.swing.*;
+import java.awt.*;
+import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 public class MainTest {
 
@@ -75,14 +85,200 @@ public class MainTest {
     
     
     
-    
-    
-    
-    
-    
-    
-    
+    /*
+    @Test
+    public void testCreateAndShowGUILoginComponents() throws InterruptedException, InvocationTargetException {
+        SwingUtilities.invokeAndWait(() -> eventPlannerGUI.createAndShowGUI());
 
+        Frame[] frames = Frame.getFrames();
+        JFrame loginFrame = null;
+        for (Frame frame : frames) {
+            if (frame instanceof JFrame && frame.getTitle().equals("Login")) {
+                loginFrame = (JFrame) frame;
+                break;
+            }
+        }
+
+        assertNotNull("Login frame not found", loginFrame);
+
+        Component[] components = loginFrame.getContentPane().getComponents();
+        assertTrue("Login frame components are empty", components.length > 0);
+
+        for (Component comp : components) {
+            if (comp instanceof JTextField) {
+                if (((JTextField) comp).getName().equals("usernameField")) {
+                    usernameField = (JTextField) comp;
+                } else if (((JTextField) comp).getName().equals("passwordField")) {
+                    passwordField = (JTextField) comp; 
+                }
+            } else if (comp instanceof JButton) {
+                loginButton = (JButton) comp; 
+            }
+        }
+
+        assertNotNull("Username field not found", usernameField);
+        assertNotNull("Password field not found", passwordField);
+        assertNotNull("Login button not found", loginButton);
+    }
+
+    
+    @Test
+    public void testCreateAndShowGUILoginComponents2() throws InterruptedException, InvocationTargetException {
+        SwingUtilities.invokeAndWait(() -> eventPlannerGUI.createAndShowGUI());
+
+        Frame[] frames = Frame.getFrames();
+        JFrame loginFrame = null;
+        for (Frame frame : frames) {
+            if (frame instanceof JFrame && frame.getTitle().equals("Login")) {
+                loginFrame = (JFrame) frame;
+                break;
+            }
+        }
+
+        assertNotNull("Login frame not found", loginFrame);
+
+        Component[] components = loginFrame.getContentPane().getComponents();
+        assertTrue("Login frame components are empty", components.length > 0);
+
+        for (Component comp : components) {
+            if (comp instanceof JTextField) {
+                if (((JTextField) comp).getName().equals("usernameField")) {
+                    usernameField = (JTextField) comp;
+                } else if (((JTextField) comp).getName().equals("passwordField")) {
+                    passwordField = (JTextField) comp;
+                }
+            } else if (comp instanceof JButton) {
+                loginButton = (JButton) comp;
+            }
+        }
+
+        assertNotNull("Username field not found", usernameField);
+        assertNotNull("Password field not found", passwordField);
+        assertNotNull("Login button not found", loginButton);
+
+        // Set username and password
+        SwingUtilities.invokeAndWait(() -> {
+            usernameField.setText("testuser");
+            passwordField.setText("1234");
+            loginButton.doClick(); // Simulate button click
+        });
+
+        // Verify login frame is disposed and new frame is shown
+        Frame[] framesAfterLogin = Frame.getFrames();
+        JFrame eventPlannerFrame = null;
+        for (Frame frame : framesAfterLogin) {
+            if (frame instanceof JFrame && frame.getTitle().equals("Event Planner")) {
+                eventPlannerFrame = (JFrame) frame;
+                break;
+            }
+        }
+
+        assertNotNull("Event Planner frame not found after login", eventPlannerFrame);
+    }
+    
+    ***************************************************************************************
+    	*/
+    
+    
+    
+    
+    
+    
+    
+    @Test
+    public void testCreateAndShowGUILoginComponents2() throws InterruptedException, InvocationTargetException {
+        SwingUtilities.invokeAndWait(() -> eventPlannerGUI.createAndShowGUI());
+
+        Frame[] frames = Frame.getFrames();
+        JFrame loginFrame = null;
+        for (Frame frame : frames) {
+            if (frame instanceof JFrame && frame.getTitle().equals("Login")) {
+                loginFrame = (JFrame) frame;
+                break;
+            }
+        }
+
+        assertNotNull("Login frame not found", loginFrame);
+
+        Component[] components = loginFrame.getContentPane().getComponents();
+        assertTrue("Login frame components are empty", components.length > 0);
+
+        for (Component comp : components) {
+            if (comp instanceof JTextField) {
+                if ("usernameField".equals(((JTextField) comp).getName())) {
+                    usernameField = (JTextField) comp;
+                } else if ("passwordField".equals(((JTextField) comp).getName())) {
+                    passwordField = (JTextField) comp;
+                }
+            } else if (comp instanceof JButton) {
+                loginButton = (JButton) comp;
+            }
+        }
+
+        assertNotNull("Username field not found", usernameField);
+        assertNotNull("Password field not found", passwordField);
+        assertNotNull("Login button not found", loginButton);
+
+        // Set username and password
+        SwingUtilities.invokeAndWait(() -> {
+            usernameField.setText("testuser");
+            passwordField.setText("1234");
+            loginButton.doClick(); // Simulate button click
+        });
+
+        // Verify login frame is disposed and new frame is shown
+        Frame[] framesAfterLogin = Frame.getFrames();
+        JFrame eventPlannerFrame = null;
+        for (Frame frame : framesAfterLogin) {
+            if (frame instanceof JFrame && frame.getTitle().equals("Event Planner")) {
+                eventPlannerFrame = (JFrame) frame;
+                break;
+            }
+        }
+
+        assertNotNull("Event Planner frame not found after login", eventPlannerFrame);
+
+        // Find List Events button
+        components = eventPlannerFrame.getContentPane().getComponents();
+        assertTrue("Event Planner frame components are empty", components.length > 0);
+
+        for (Component comp : components) {
+            if (comp instanceof JButton && "List Events".equals(((JButton) comp).getText())) {
+                listEventsButton = (JButton) comp;
+                break;
+            }
+        }
+
+        assertNotNull("List Events button not found", listEventsButton);
+
+        // Simulate list events button click
+        SwingUtilities.invokeAndWait(() -> listEventsButton.doClick());
+
+        // Access the JOptionPane components and click OK
+        SwingUtilities.invokeAndWait(() -> {
+            for (Window window : Window.getWindows()) {
+                if (window.isActive() && window instanceof JFrame) {
+                    for (Component comp : ((JFrame) window).getContentPane().getComponents()) {
+                        if (comp instanceof JPanel) {
+                            for (Component panelComp : ((JPanel) comp).getComponents()) {
+                                if (panelComp instanceof JButton && "OK".equals(((JButton) panelComp).getText())) {
+                                    ((JButton) panelComp).doClick();
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -99,11 +295,6 @@ public class MainTest {
 
    
 
-    // Test EventPlannerGUI
-    @Test
-    public void testCreateAndShowGUI() {
-        assertNotNull(eventPlannerGUI);
-    }
 
     // Test DatabaseConnection
     @Test
