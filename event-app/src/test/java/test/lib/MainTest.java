@@ -1096,7 +1096,80 @@ public class MainTest {
     	eventFacade.getAllSchedules();
     	assertEquals(0, 0);
     }
-    
+    @Test
+    public void testAddEvent_EventAlreadyPresent() {
+        // Arrange
+        Attendee attendee = new Attendee("John Doe", "john@example.com");
+        Event event = new Event("Event 1", "2024-06-15", "Location 1", "Description 1");
+        attendee.addEvent(event); // Add event first time
+
+        // Act
+        boolean wasAdded = attendee.addEvent(event); // Try adding same event again
+
+        // Assert
+        assertFalse(wasAdded);
+        assertEquals(1, attendee.numberOfEvents());
+    }
+
+    @Test
+    public void testAddEvent_EventNotPresentButAttendeeAlreadyAdded() {
+        // Arrange
+        Attendee attendee = new Attendee("John Doe", "john@example.com");
+        Event event = new Event("Event 1", "2024-06-15", "Location 1", "Description 1") {
+            @Override
+            public int indexOfAttendee(Attendee aAttendee) {
+                return 0; // Simulate attendee already added
+            }
+        };
+
+        // Act
+        boolean wasAdded = attendee.addEvent(event);
+
+        // Assert
+        assertTrue(wasAdded);
+        assertEquals(1, attendee.numberOfEvents());
+        assertTrue(attendee.getEvents().contains(event));
+    }
+
+    @Test
+    public void testAddEvent_EventNotPresentAndAttendeeNotAddedSuccessfully() {
+        // Arrange
+        Attendee attendee = new Attendee("John Doe", "john@example.com");
+        Event event = new Event("Event 1", "2024-06-15", "Location 1", "Description 1") {
+            @Override
+            public boolean addAttendee(Attendee aAttendee) {
+                return false; // Simulate adding attendee fails
+            }
+        };
+
+        // Act
+        boolean wasAdded = attendee.addEvent(event);
+
+        // Assert
+        assertFalse(wasAdded);
+        assertEquals(0, attendee.numberOfEvents());
+        assertFalse(attendee.getEvents().contains(event));
+    }
+
+    @Test
+    public void testAddEvent_EventNotPresentAndAttendeeAddedSuccessfully() {
+        // Arrange
+        Attendee attendee = new Attendee("John Doe", "john@example.com");
+        Event event = new Event("Event 1", "2024-06-15", "Location 1", "Description 1") {
+            @Override
+            public boolean addAttendee(Attendee aAttendee) {
+                return true; // Simulate adding attendee successfully
+            }
+        };
+
+        // Act
+        boolean wasAdded = attendee.addEvent(event);
+
+        // Assert
+        assertTrue(wasAdded);
+        assertEquals(1, attendee.numberOfEvents());
+        assertTrue(attendee.getEvents().contains(event));
+    }
     @Test
     public void testAttendeeGet() {
     	attendee.getName();
@@ -1200,6 +1273,140 @@ public class MainTest {
         assertEquals(event, attendee.getEvent(0));
     }
     
+    @Test
+    public void testRemoveEvent_EventNotPresent() {
+        // Arrange
+        Schedule schedule = new Schedule("Activity", "10:00 AM");
+        Event event = new Event("Event 1", "2024-06-15", "Location 1", "Description 1");
+
+        // Act
+        boolean wasRemoved = schedule.removeEvent(event);
+
+        // Assert
+        assertFalse(wasRemoved);
+        assertEquals(0, schedule.numberOfEvents());
+    }
+
+    @Test
+    public void testRemoveEvent_EventPresentAndRemoveFromSchedule() {
+        // Arrange
+        Schedule schedule = new Schedule("Activity", "10:00 AM");
+        Event event = new Event("Event 1", "2024-06-15", "Location 1", "Description 1");
+        schedule.addEvent(event);
+
+        // Act
+        boolean wasRemoved = schedule.removeEvent(event);
+
+        // Assert
+        assertTrue(wasRemoved);
+        assertEquals(0, schedule.numberOfEvents());
+        assertFalse(schedule.getEvents().contains(event));
+    }
+
+    @Test
+    public void testRemoveEvent_EventPresentButNotRemovedFromEvent() {
+        // Arrange
+        Schedule schedule = new Schedule("Activity", "10:00 AM");
+        Event event = new Event("Event 1", "2024-06-15", "Location 1", "Description 1") {
+            @Override
+            public boolean removeSchedule(Schedule aSchedule) {
+                return false;
+            }
+        };
+        schedule.addEvent(event);
+
+        // Act
+        boolean wasRemoved = schedule.removeEvent(event);
+
+        // Assert
+        assertFalse(wasRemoved);
+        assertEquals(1, schedule.numberOfEvents());
+        assertTrue(schedule.getEvents().contains(event));
+    }
+
+    @Test
+    public void testRemoveEvent_EventPresentAndSuccessfullyRemoved() {
+        // Arrange
+        Schedule schedule = new Schedule("Activity", "10:00 AM");
+        Event event = new Event("Event 1", "2024-06-15", "Location 1", "Description 1");
+        schedule.addEvent(event);
+
+        // Act
+        boolean wasRemoved = schedule.removeEvent(event);
+
+        // Assert
+        assertTrue(wasRemoved);
+        assertEquals(0, schedule.numberOfEvents());
+        assertFalse(schedule.getEvents().contains(event));
+    }
+    
+
+    @Test
+    public void testRemoveEvent_EventNotPresent2() {
+        // Arrange
+        Attendee attendee = new Attendee("John Doe", "john@example.com");
+        Event event = new Event("Event 1", "2024-06-15", "Location 1", "Description 1");
+
+        // Act
+        boolean wasRemoved = attendee.removeEvent(event);
+
+        // Assert
+        assertFalse(wasRemoved);
+        assertEquals(0, attendee.numberOfEvents());
+    }
+
+    @Test
+    public void testRemoveEvent_EventPresentAndRemoveFromAttendee2() {
+        // Arrange
+        Attendee attendee = new Attendee("John Doe", "john@example.com");
+        Event event = new Event("Event 1", "2024-06-15", "Location 1", "Description 1");
+        attendee.addEvent(event);
+
+        // Act
+        boolean wasRemoved = attendee.removeEvent(event);
+
+        // Assert
+        assertTrue(wasRemoved);
+        assertEquals(0, attendee.numberOfEvents());
+        assertFalse(attendee.getEvents().contains(event));
+    }
+
+    @Test
+    public void testRemoveEvent_EventPresentButNotRemovedFromEvent2() {
+        // Arrange
+        Attendee attendee = new Attendee("John Doe", "john@example.com");
+        Event event = new Event("Event 1", "2024-06-15", "Location 1", "Description 1") {
+            @Override
+            public boolean removeAttendee(Attendee aAttendee) {
+                return false;
+            }
+        };
+        attendee.addEvent(event);
+
+        // Act
+        boolean wasRemoved = attendee.removeEvent(event);
+
+        // Assert
+        assertFalse(wasRemoved);
+        assertEquals(1, attendee.numberOfEvents());
+        assertTrue(attendee.getEvents().contains(event));
+    }
+
+    @Test
+    public void testRemoveEvent_EventPresentAndSuccessfullyRemoved2() {
+        // Arrange
+        Attendee attendee = new Attendee("John Doe", "john@example.com");
+        Event event = new Event("Event 1", "2024-06-15", "Location 1", "Description 1");
+        attendee.addEvent(event);
+
+        // Act
+        boolean wasRemoved = attendee.removeEvent(event);
+
+        // Assert
+        assertTrue(wasRemoved);
+        assertEquals(0, attendee.numberOfEvents());
+        assertFalse(attendee.getEvents().contains(event));
+    }
     
     
     
