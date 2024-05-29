@@ -139,38 +139,6 @@ public class Schedule
     }
     return wasRemoved;
   }
-  /* Code from template association_AddIndexControlFunctions */
-  public boolean addEventAt(Event aEvent, int index)
-  {  
-    boolean wasAdded = false;
-    if(addEvent(aEvent))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfEvents()) { index = numberOfEvents() - 1; }
-      events.remove(aEvent);
-      events.add(index, aEvent);
-      wasAdded = true;
-    }
-    return wasAdded;
-  }
-
-  public boolean addOrMoveEventAt(Event aEvent, int index)
-  {
-    boolean wasAdded = false;
-    if(events.contains(aEvent))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfEvents()) { index = numberOfEvents() - 1; }
-      events.remove(aEvent);
-      events.add(index, aEvent);
-      wasAdded = true;
-    } 
-    else 
-    {
-      wasAdded = addEventAt(aEvent, index);
-    }
-    return wasAdded;
-  }
 
   public void delete()
   {
@@ -180,13 +148,5 @@ public class Schedule
     {
       aEvent.removeSchedule(this);
     }
-  }
-
-
-  public String toString()
-  {
-    return super.toString() + "["+
-            "activity" + ":" + getActivity()+ "," +
-            "time" + ":" + getTime()+ "]";
   }
 }
