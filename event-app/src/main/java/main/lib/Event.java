@@ -172,15 +172,19 @@ public class Event
 	    observers.add(observer);
 	  }
 
-	  public void removeObserver(Observer observer) {
+  public void removeObserver(Observer observer) {
 	    observers.remove(observer);
 	  }
 
-	  public void notifyObservers(String message) {
+  public void notifyObservers(String message) {
 	    for (Observer observer : observers) {
 	      observer.update(message);
 	    }
   }
+  public List<Observer> getObservers() {
+		    return observers;
+		}
+
 	  
   public void updateEventDetails(String details) {
 	    this.description = details;
@@ -334,12 +338,4 @@ public class Event
   }
 
 
-  public String toString()
-  {
-    return super.toString() + "["+
-            "name" + ":" + getName()+ "," +
-            "date" + ":" + getDate()+ "," +
-            "location" + ":" + getLocation()+ "," +
-            "description" + ":" + getDescription()+ "]";
-  }
 }
