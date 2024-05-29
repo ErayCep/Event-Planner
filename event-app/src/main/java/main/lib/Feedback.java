@@ -69,16 +69,4 @@ public class Feedback
   {
     return rating;
   }
-
-  public void delete()
-  {}
-
-
-  public String toString()
-  {
-    return super.toString() + "["+
-            "attendeeName" + ":" + getAttendeeName()+ "," +
-            "comments" + ":" + getComments()+ "," +
-            "rating" + ":" + getRating()+ "]";
-  }
 }
