@@ -19,18 +19,18 @@
 	<inceptionYear>2023</inceptionYear>
 	<developers>
 		<developer>
-			<name>Asst. Prof. Dr. Ugur CORUH</name>
+			<name>Eren SISMAN</name>
 			<organization>RTEU</organization>
-			<email>ugur.coruh@erdogan.edu.tr</email>
+			<email>eren_sisman20@erdogan.edu.tr</email>
 			<roles>
 				<role>Developer</role>
 				<role>Designer</role>
 			</roles>
 		</developer>
 		<developer>
-			<name>Other Person</name>
+			<name>Eray CEPNI</name>
 			<organization>RTEU</organization>
-			<email>mail@gmail.com</email>
+			<email>eray_cepni22@erdogan.edu.tr</email>
 			<roles>
 				<role>Developer</role>
 			</roles>
@@ -38,8 +38,8 @@
 	</developers>
 	<contributors>
 		<contributor>
-			<name>Asst. Prof. Dr. Ugur CORUH</name>
-			<email>ugur.coruh@erdogan.edu.tr</email>
+			<name>Eren SISMAN</name>
+			<email>eren_sisman20@erdogan.edu.tr</email>
 			<organization>RTEU</organization>
 			<roles>
 				<role>Developer</role>
@@ -47,9 +47,9 @@
 			</roles>
 		</contributor>
 		<contributor>
-			<name>Other Person</name>
+			<name>Eray CEPNI</name>
 			<organization>RTEU</organization>
-			<email>mail@gmail.com</email>
+			<email>eray_cepni22@erdogan.edu.tr</email>
 			<roles>
 				<role>Developer</role>
 			</roles>
@@ -69,7 +69,7 @@
 		<system>Github</system>
 		<notifiers>
 			<notifier>
-				<address>ugur.coruh@erdogan.edu.tr</address>
+				<address>eren_sisman20@erdogan.edu.tr</address>
 				<sendOnSuccess>true</sendOnSuccess>
 				<sendOnError>true</sendOnError>
 				<sendOnFailure>true</sendOnFailure>
