@@ -44,7 +44,7 @@ public class EventFacade {
 	/**
 	 * @brief This constructor creates an EventFacade object and initializes the EventDAO, AttendeeDAO, ScheduleDAO, and FeedbackDAO objects.
 	 */
-    private EventFacade() {
+    public EventFacade() {
         eventDAO = new EventDAO();
         attendeeDAO = new AttendeeDAO();
         scheduleDAO = new ScheduleDAO();

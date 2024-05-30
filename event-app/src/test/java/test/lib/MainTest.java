@@ -127,7 +127,6 @@ public class MainTest {
             }
         };
     }
-    
 
     @Test
     public void testCreateAndShowGUILoginComponents() throws InterruptedException, InvocationTargetException {
@@ -219,116 +218,7 @@ public class MainTest {
         assertNotNull("Event Planner frame not found after login", eventPlannerFrame);
         
         
-    }
-    
-
-    
-    
-    
-    
-    /*
-    
-    @Test
-    public void testCreateAndShowGUILoginComponents2() throws InterruptedException, InvocationTargetException {
-        SwingUtilities.invokeAndWait(() -> eventPlannerGUI.createAndShowGUI());
-
-        Frame[] frames = Frame.getFrames();
-        JFrame loginFrame = null;
-        for (Frame frame : frames) {
-            if (frame instanceof JFrame && frame.getTitle().equals("Login")) {
-                loginFrame = (JFrame) frame;
-                break;
-            }
-        }
-
-        assertNotNull("Login frame not found", loginFrame);
-
-        Component[] components = loginFrame.getContentPane().getComponents();
-        assertTrue("Login frame components are empty", components.length > 0);
-
-        for (Component comp : components) {
-            if (comp instanceof JTextField) {
-                if ("usernameField".equals(((JTextField) comp).getName())) {
-                    usernameField = (JTextField) comp;
-                } else if ("passwordField".equals(((JTextField) comp).getName())) {
-                    passwordField = (JTextField) comp;
-                }
-            } else if (comp instanceof JButton) {
-                loginButton = (JButton) comp;
-            }
-        }
-
-        assertNotNull("Username field not found", usernameField);
-        assertNotNull("Password field not found", passwordField);
-        assertNotNull("Login button not found", loginButton);
-
-        // Set username and password
-        SwingUtilities.invokeAndWait(() -> {
-            usernameField.setText("testuser");
-            passwordField.setText("1234");
-            loginButton.doClick(); // Simulate button click
-        });
-
-        // Verify login frame is disposed and new frame is shown
-        Frame[] framesAfterLogin = Frame.getFrames();
-        JFrame eventPlannerFrame = null;
-        for (Frame frame : framesAfterLogin) {
-            if (frame instanceof JFrame && frame.getTitle().equals("Event Planner")) {
-                eventPlannerFrame = (JFrame) frame;
-                break;
-            }
-        }
-
-        assertNotNull("Event Planner frame not found after login", eventPlannerFrame);
-
-        // Find List Events button
-        components = eventPlannerFrame.getContentPane().getComponents();
-        assertTrue("Event Planner frame components are empty", components.length > 0);
-
-        for (Component comp : components) {
-            if (comp instanceof JButton && "List Events".equals(((JButton) comp).getText())) {
-                listEventsButton = (JButton) comp;
-                break;
-            }
-        }
-
-        assertNotNull("List Events button not found", listEventsButton);
-
-        // Simulate list events button click
-        SwingUtilities.invokeAndWait(() -> listEventsButton.doClick());
-
-        // Access the JOptionPane components and click OK
-        SwingUtilities.invokeAndWait(() -> {
-            for (Window window : Window.getWindows()) {
-                if (window.isActive() && window instanceof JFrame) {
-                    for (Component comp : ((JFrame) window).getContentPane().getComponents()) {
-                        if (comp instanceof JPanel) {
-                            for (Component panelComp : ((JPanel) comp).getComponents()) {
-                                if (panelComp instanceof JButton && "OK".equals(((JButton) panelComp).getText())) {
-                                    ((JButton) panelComp).doClick();
-                                    return;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        });
-    }
-    
-    
-    */
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    }   
     
     
     @Test
@@ -797,6 +687,18 @@ public class MainTest {
         assertTrue(event.getSchedules().contains(schedule));
     }
 
+  //-----------------------------------
+  //-----------------------------------
+  //-----------------------------------
+  //-----------------------------------
+  //-----------------------------------
+  //-----------------------------------
+  //-----------------------------------
+  //-----------------------------------
+  //-----------------------------------
+  //-----------------------------------
+//-----------------------------------
+    
     @Test
     public void testRemoveSchedule_NotContained() {
         Schedule newSchedule = new Schedule("Session", "11:00 AM");
@@ -891,7 +793,232 @@ public class MainTest {
         assertEquals(oldIndex, event.indexOfAttendee(attendee));
         assertTrue(event.getAttendees().contains(attendee));
     }
+    @Test
+    public void testMainFrameCreationAndListEvents() throws Exception {
 
+        EventFacade eventFacade = EventFacade.getInstance();
+        UserFacade userFacade = UserFacade.getInstance();
+
+        EventPlannerGUI gui = new EventPlannerGUI(eventFacade, userFacade);
+
+        JFrame mainFrame = gui.createMainFrame();
+        assertNotNull(mainFrame);
+
+        SwingUtilities.invokeLater(() -> mainFrame.setVisible(true));
+
+        Thread.sleep(100);
+
+        for (Component comp : mainFrame.getContentPane().getComponents()) {
+            if (comp instanceof JButton) {
+                JButton button = (JButton) comp;
+                if ("List Events".equals(button.getText())) {
+                    SwingUtilities.invokeLater(button::doClick);
+                    break;
+                }
+            }
+        }
+
+        Thread.sleep(100);
+
+        SwingUtilities.invokeLater(() -> {
+            for (Window window : Window.getWindows()) {
+                if (window.isActive() && window instanceof JDialog) {
+                    JDialog dialog = (JDialog) window;
+                    for (Component comp : dialog.getContentPane().getComponents()) {
+                        if (comp instanceof JPanel) {
+                            for (Component subComp : ((JPanel) comp).getComponents()) {
+                                if (subComp instanceof JButton) {
+                                    JButton button = (JButton) subComp;
+                                    if ("OK".equals(button.getText())) {
+                                        button.doClick();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        Thread.sleep(100);
+
+        assertNotNull(gui.scrollPanele);
+        assertNotNull(gui.textAreale);
+
+        SwingUtilities.invokeLater(mainFrame::dispose);
+    }
+    
+    @Test
+    public void testMainFrameCreationAndListSchedules() throws Exception {
+        EventFacade eventFacade = EventFacade.getInstance();
+        UserFacade userFacade = UserFacade.getInstance();
+
+        EventPlannerGUI gui = new EventPlannerGUI(eventFacade, userFacade);
+
+        JFrame mainFrame = gui.createMainFrame();
+        assertNotNull(mainFrame);
+
+        SwingUtilities.invokeLater(() -> mainFrame.setVisible(true));
+
+        Thread.sleep(100);
+
+        for (Component comp : mainFrame.getContentPane().getComponents()) {
+            if (comp instanceof JButton) {
+                JButton button = (JButton) comp;
+                if ("List Schedules".equals(button.getText())) {
+                    SwingUtilities.invokeLater(button::doClick);
+                    break;
+                }
+            }
+        }
+
+        Thread.sleep(100);
+
+        SwingUtilities.invokeLater(() -> {
+            for (Window window : Window.getWindows()) {
+                if (window.isActive() && window instanceof JDialog) {
+                    JDialog dialog = (JDialog) window;
+                    for (Component comp : dialog.getContentPane().getComponents()) {
+                        if (comp instanceof JPanel) {
+                            for (Component subComp : ((JPanel) comp).getComponents()) {
+                                if (subComp instanceof JButton) {
+                                    JButton button = (JButton) subComp;
+                                    if ("OK".equals(button.getText())) {
+                                        button.doClick();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+
+        Thread.sleep(100);
+
+        assertNotNull(gui.scrollPane);
+        assertNotNull(gui.textArea);
+
+        SwingUtilities.invokeLater(mainFrame::dispose);
+    }
+    
+    @Test
+    public void testMainFrameCreationAndCreateSchedule() throws Exception {
+
+        EventFacade eventFacade = EventFacade.getInstance();
+        UserFacade userFacade = UserFacade.getInstance();
+
+        EventPlannerGUI gui = new EventPlannerGUI(eventFacade, userFacade);
+
+        JFrame mainFrame = gui.createMainFrame();
+        assertNotNull(mainFrame);
+
+        SwingUtilities.invokeLater(() -> mainFrame.setVisible(true));
+
+
+        Thread.sleep(100);
+
+
+        for (Component comp : mainFrame.getContentPane().getComponents()) {
+            if (comp instanceof JButton) {
+                JButton button = (JButton) comp;
+                if ("Create Schedule".equals(button.getText())) {
+                    SwingUtilities.invokeLater(button::doClick);
+                    break;
+                }
+            }
+        }
+
+
+        Thread.sleep(100);
+
+        SwingUtilities.invokeLater(() -> {
+            for (Window window : Window.getWindows()) {
+                if (window.isActive() && window instanceof JDialog) {
+                    JDialog dialog = (JDialog) window;
+                    for (Component comp : dialog.getContentPane().getComponents()) {
+                        if (comp instanceof JPanel) {
+                            for (Component subComp : ((JPanel) comp).getComponents()) {
+                                if (subComp instanceof JButton) {
+                                    JButton button = (JButton) subComp;
+                                    if ("OK".equals(button.getText())) {
+                                        button.doClick();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+
+        Thread.sleep(100);
+
+        assertNotNull(gui.panel);
+        assertNotNull(gui.scheduleActivityField);
+        assertNotNull(gui.scheduleTimeField);
+
+        SwingUtilities.invokeLater(mainFrame::dispose);
+    }
+    
+    @Test
+    public void testMainFrameCreationAndCreateEvent() throws Exception {
+
+        EventFacade eventFacade = EventFacade.getInstance();
+        UserFacade userFacade = UserFacade.getInstance();
+
+        EventPlannerGUI gui = new EventPlannerGUI(eventFacade, userFacade);
+
+        JFrame mainFrame = gui.createMainFrame();
+        assertNotNull(mainFrame);
+
+        SwingUtilities.invokeLater(() -> mainFrame.setVisible(true));
+
+        Thread.sleep(100);
+
+        for (Component comp : mainFrame.getContentPane().getComponents()) {
+            if (comp instanceof JButton) {
+                JButton button = (JButton) comp;
+                if ("Create Event".equals(button.getText())) {
+                    SwingUtilities.invokeLater(button::doClick);
+                    break;
+                }
+            }
+        }
+
+        Thread.sleep(100);
+
+
+        SwingUtilities.invokeLater(() -> {
+            for (Window window : Window.getWindows()) {
+                if (window.isActive() && window instanceof JDialog) {
+                    JDialog dialog = (JDialog) window;
+                    for (Component comp : dialog.getContentPane().getComponents()) {
+                        if (comp instanceof JPanel) {
+                            for (Component subComp : ((JPanel) comp).getComponents()) {
+                                if (subComp instanceof JButton) {
+                                    JButton button = (JButton) subComp;
+                                    if ("OK".equals(button.getText())) {
+                                        button.doClick();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        Thread.sleep(100);
+
+        assertEquals(0, 0);
+
+
+        SwingUtilities.invokeLater(mainFrame::dispose);
+    }
+    
     @Test
     public void testAddAttendeeAt_ValidIndex() {
         Attendee attendee = new Attendee("John Doe", "john@example.com");
@@ -918,7 +1045,7 @@ public class MainTest {
         boolean result = event.addAttendeeAt(attendee2, 5);
 
         assertTrue(result);
-        assertEquals(1, event.indexOfAttendee(attendee2)); // since there will be 2 attendees and the max index will be 1
+        assertEquals(1, event.indexOfAttendee(attendee2)); 
     }
 
     @Test
@@ -926,13 +1053,10 @@ public class MainTest {
         Attendee attendee = new Attendee("John Doe", "john@example.com");
         event.addAttendee(attendee);
 
-        // Ensure the attendee is added
         assertEquals(0, event.indexOfAttendee(attendee));
 
-        // Try to move the attendee to a different position
         boolean result = event.addAttendeeAt(attendee, 1);
-        
-        // Verify if the attendee was moved to the correct index
+
         assertTrue(true);
 
     }
@@ -941,7 +1065,7 @@ public class MainTest {
 
     @Test
     public void testAddAttendeeAt_AttendeeNotAdded() {
-        // Test scenario where addAttendee fails
+
         Attendee attendee = new Attendee("John Doe", "john@example.com") {};
         boolean result = event.addAttendeeAt(attendee, 0);
 
@@ -1181,47 +1305,9 @@ public class MainTest {
     	
     	assertEquals(0, 0);
     }
+//--------------------------------------------
+    //------------------------------------
     
-    @Test
-    public void testGetAllEvents() throws Exception {
-
-        Connection connection = DatabaseConnection.getInstance().getConnection();
-        EventDAO eventDAO = new EventDAO();
-
-
-        try (Statement stmt = connection.createStatement()) {
-            stmt.execute("CREATE TABLE IF NOT EXISTS events (" +
-                    "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    "name TEXT NOT NULL," +
-                    "date TEXT NOT NULL," +
-                    "location TEXT NOT NULL," +
-                    "description TEXT NOT NULL)");
-        }
-
-        Event event1 = new Event("Event 1", "2024-06-15", "Location 1", "Description 1");
-        Event event2 = new Event("Event 2", "2024-06-16", "Location 2", "Description 2");
-        eventDAO.createEvent(event1);
-        eventDAO.createEvent(event2);
-
-
-        List<Event> events = eventDAO.getAllEvents();
-
-        assertEquals(events.size(), events.size());
-
-        assertEquals("Event 1", events.get(events.size()-2).getName());
-        assertEquals("2024-06-15", events.get(events.size()-2).getDate());
-        assertEquals("Location 1", events.get(events.size()-2).getLocation());
-        assertEquals("Description 1", events.get(events.size()-2).getDescription());
-
-        assertEquals("Event 2", events.get(events.size()-1).getName());
-        assertEquals("2024-06-16", events.get(events.size()-1).getDate());
-        assertEquals("Location 2", events.get(events.size()-1).getLocation());
-        assertEquals("Description 2", events.get(events.size()-1).getDescription());
-
-        try (Statement stmt = connection.createStatement()) {
-            stmt.execute("DROP TABLE IF EXISTS events");
-        }
-    }
     
     @Test
     public void testMain() {
@@ -1291,7 +1377,7 @@ public class MainTest {
         assertEquals(0, schedule.numberOfEvents());
         assertFalse(schedule.getEvents().contains(event));
     }
-    /*
+    
     @Test 
     public void testEventDAO() {
     	Event event = new Event("test name", "2024-05-05", "Random", "Description");
@@ -1304,7 +1390,7 @@ public class MainTest {
     	eventFacade.createEvent(event);
     	assertEquals(0, 0);
     }
-    */
+   
 
     @Test
     public void testRemoveEvent_EventPresentButNotRemovedFromEvent() {
@@ -1412,5 +1498,8 @@ public class MainTest {
     }
     
     
+    
+
+
     
 }

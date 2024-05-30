@@ -29,7 +29,7 @@ public class UserFacade {
 	 * @brief This constructor creates an user facade.
 	 * @details This constructor creates an user facade.
 	 */
-	private UserFacade() {
+	public UserFacade() {
 		userDAO = new UserDAO();
 	}
 
