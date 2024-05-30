@@ -1,0 +1,70 @@
+@startuml
+class Event {
+  String name
+  String date
+  String location
+  String description
+  +Event(String, String, String, String)
+  +setName(String): boolean
+  +setDate(String): boolean
+  +setLocation(String): boolean
+  +setDescription(String): boolean
+  +getName(): String
+  +getDate(): String
+  +getLocation(): String
+  +getDescription(): String
+}
+
+class Attendee {
+  String name
+  String email
+  +Attendee(String, String)
+  +setName(String): boolean
+  +setEmail(String): boolean
+  +getName(): String
+  +getEmail(): String
+}
+
+class Schedule {
+  String activity
+  String time
+  +Schedule(String, String)
+  +setActivity(String): boolean
+  +setTime(String): boolean
+  +getActivity(): String
+  +getTime(): String
+}
+
+Event "1" *-- "0..*" Attendee
+Event "1" *-- "0..*" Schedule
+@enduml
+
+@startuml
+actor User
+participant "EventPlannerGUI" as GUI
+participant "UserFacade" as UF
+participant "EventFacade" as EF
+participant "Event" as E
+
+User -> GUI: login(username, password)
+GUI -> UF: loginUser(User)
+UF --> GUI: success
+GUI -> GUI: createMainFrame()
+GUI -> GUI: handleCreateEvent()
+GUI -> EF: createEvent(Event)
+EF -> E: Event(String, String, String, String)
+EF --> GUI: Event Created
+GUI --> User: show success message
+@enduml
+@startuml
+state "Event Planning" as Planning {
+  [*] --> Login
+  Login --> MainScreen: successful login
+  state "MainScreen" as Main {
+    [*] --> Idle
+    Idle --> CreatingEvent: create event button clicked
+    CreatingEvent --> Idle: event created
+  }
+  MainScreen --> Login: logout
+}
+@enduml
