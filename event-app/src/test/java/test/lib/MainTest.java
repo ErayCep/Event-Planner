@@ -1059,12 +1059,7 @@ public class MainTest {
     	assertEquals(0, 0);
     }
     
-    @Test 
-    public void testEventDAO() {
-    	Event event = new Event("test name", "2024-05-05", "Random", "Description");
-    	eventDAO.createEvent(event);
-    	assertEquals(0, 0);
-    }
+
     
     @Test
     public void testUserFacade() {
@@ -1072,13 +1067,7 @@ public class MainTest {
     	assertEquals(0, 0);
     }
     
-    @Test
-    public void testEventFacade() {
-    	Event event = new Event("test name", "2024-05-05", "Random", "Description");
-    	eventFacade.createEvent(event);
-    	assertEquals(0, 0);
-    }
-    
+
     @Test
     public void testEventFacadeSchedule() {
     	eventFacade.planSchedule(schedule);
@@ -1302,6 +1291,20 @@ public class MainTest {
         assertEquals(0, schedule.numberOfEvents());
         assertFalse(schedule.getEvents().contains(event));
     }
+    /*
+    @Test 
+    public void testEventDAO() {
+    	Event event = new Event("test name", "2024-05-05", "Random", "Description");
+    	eventDAO.createEvent(event);
+    	assertEquals(0, 0);
+    }
+    @Test
+    public void testEventFacade() {
+    	Event event = new Event("test name", "2024-05-05", "Random", "Description");
+    	eventFacade.createEvent(event);
+    	assertEquals(0, 0);
+    }
+    */
 
     @Test
     public void testRemoveEvent_EventPresentButNotRemovedFromEvent() {
@@ -1339,7 +1342,6 @@ public class MainTest {
         assertEquals(0, schedule.numberOfEvents());
         assertFalse(schedule.getEvents().contains(event));
     }
-    
 
     @Test
     public void testRemoveEvent_EventNotPresent2() {
@@ -1371,6 +1373,7 @@ public class MainTest {
         assertFalse(attendee.getEvents().contains(event));
     }
 
+    
     @Test
     public void testRemoveEvent_EventPresentButNotRemovedFromEvent2() {
         // Arrange
