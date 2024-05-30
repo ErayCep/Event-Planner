@@ -1,4 +1,3 @@
-
 name: Maven Java Release with Test Coverage Control
 
 on:
