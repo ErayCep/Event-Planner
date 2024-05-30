@@ -1,3 +1,12 @@
+/**
+ * @file EventPlannerGUI.java
+ * @brief This file contains the EventPlannerGUI class which is used to create the graphical user interface for the event planner application.
+ * @details  This file contains the EventPlannerGUI class which is used to create the graphical user interface for the event planner application. It contains the methods required for creating the GUI.
+ */
+/**
+ * @package main.app
+ * @brief The main.app package contains the main class of the application.
+ */
 package main.app;
 
 import main.lib.EventFacade;
@@ -12,17 +21,39 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+/**
+ * @class EventPlannerGUI
+ * @brief The EventPlannerGUI class is used to create the graphical user interface for the event planner application.
+ * @details The EventPlannerGUI class is used to create the graphical user interface for the event planner application. It contains the methods required for creating the GUI.
+ * @author eray.cepni,eren.sisman
+ */
 public class EventPlannerGUI {
+	/**
+	 * @brief The EventFacade instance.
+     */
     private EventFacade eventFacade;
+	/**
+	 * @brief The UserFacade instance.
+	 */
     private UserFacade userFacade;
-    private boolean loggedIn;
+	/**
+	 * @brief A boolean variable to check if the user is logged in.
+	 */
 
+	/**
+	 * @brief This constructor creates an EventPlannerGUI object.
+	 * @details This constructor creates an EventPlannerGUI object and initializes the EventFacade and UserFacade instances.
+	 */
     public EventPlannerGUI() {
         eventFacade = EventFacade.getInstance();
         userFacade = UserFacade.getInstance();
-        loggedIn = false;
+
     }
 
+	/**
+	 * @brief This method creates and shows the graphical user interface of the event planner application.
+	 * @details This method creates and shows the graphical user interface of the event planner application. It creates a login window where the user can enter the username and password. If the login is successful, it opens the main window of the application where the user can create events, list events, create schedules, and list schedules.
+	 */
     public void createAndShowGUI() {
 		JFrame frame = new JFrame("Login");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -60,106 +91,106 @@ public class EventPlannerGUI {
 			        createEventButton.addActionListener(new ActionListener() {
 			            @Override
 			            public void actionPerformed(ActionEvent e) {
-			                // Etkinlik oluşturma parametrelerini girmek için diyalog penceresi // Eklendi
-			                JTextField eventNameField = new JTextField(10); // Eklendi
-			                eventNameField.setName("eventNameField"); // Eklendi
-			                JTextField eventDateField = new JTextField(10); // Eklendi
-			                eventDateField.setName("eventDateField"); // Eklendi
-			                JTextField eventLocationField = new JTextField(10); // Eklendi
-			                eventLocationField.setName("eventLocationField"); // Eklendi
-			                JTextField eventDescriptionField = new JTextField(10); // Eklendi
-			                eventDescriptionField.setName("eventDescriptionField"); // Eklendi
-			                JPanel panel = new JPanel(); // Eklendi
-			                panel.setName("eventPanel"); // Eklendi
-			                panel.add(new JLabel("Event Name:")); // Eklendi
-			                panel.add(eventNameField); // Eklendi
-			                panel.add(new JLabel("Event Date:")); // Eklendi
-			                panel.add(eventDateField); // Eklendi
-			                panel.add(new JLabel("Event Location:")); // Eklendi
-			                panel.add(eventLocationField); // Eklendi
-			                panel.add(new JLabel("Event Description:")); // Eklendi
-			                panel.add(eventDescriptionField); // Eklendi
+
+			                JTextField eventNameField = new JTextField(10); 
+			                eventNameField.setName("eventNameField"); 
+			                JTextField eventDateField = new JTextField(10); 
+			                eventDateField.setName("eventDateField"); 
+			                JTextField eventLocationField = new JTextField(10); 
+			                eventLocationField.setName("eventLocationField"); 
+			                JTextField eventDescriptionField = new JTextField(10); 
+			                eventDescriptionField.setName("eventDescriptionField"); 
+			                JPanel panel = new JPanel(); 
+			                panel.setName("eventPanel"); 
+			                panel.add(new JLabel("Event Name:")); 
+			                panel.add(eventNameField); 
+			                panel.add(new JLabel("Event Date:")); 
+			                panel.add(eventDateField); 
+			                panel.add(new JLabel("Event Location:")); 
+			                panel.add(eventLocationField); 
+			                panel.add(new JLabel("Event Description:")); 
+			                panel.add(eventDescriptionField);
 
 			                int result = JOptionPane.showConfirmDialog(null, panel, 
-			                         "Enter Event Details", JOptionPane.OK_CANCEL_OPTION); // Eklendi
+			                         "Enter Event Details", JOptionPane.OK_CANCEL_OPTION); 
 			                if (result == JOptionPane.OK_OPTION) {
-			                    Event event = new Event(eventNameField.getText(), eventDateField.getText(), // Eklendi
-			                            eventLocationField.getText(), eventDescriptionField.getText()); // Eklendi
-			                    eventFacade.createEvent(event); // Eklendi
-			                    JOptionPane.showMessageDialog(frame, "Event Created!"); // Eklendi
+			                    Event event = new Event(eventNameField.getText(), eventDateField.getText(), 
+			                            eventLocationField.getText(), eventDescriptionField.getText()); 
+			                    eventFacade.createEvent(event); 
+			                    JOptionPane.showMessageDialog(frame, "Event Created!"); 
 			                }
 
 			            }
 			        });
 			        
-			        JButton listEventsButton = new JButton("List Events"); // Ekle
-			        listEventsButton.addActionListener(new ActionListener() { // Eklendi
-			            @Override // Eklendi
-			            public void actionPerformed(ActionEvent e) { // Eklendi
-			                List<Event> events = eventFacade.getAllEvents(); // Eklendi
-			                StringBuilder eventList = new StringBuilder(); // Eklendi
-			                for (Event event : events) { // Eklendi
-			                    eventList.append(event.getName()).append(", ").append(event.getDate()) // Eklendi
-			                             .append(", ").append(event.getLocation()).append(", ") // Eklendi
-			                             .append(event.getDescription()).append("\n"); // Eklendi
-			                } // Eklendi
-			                JTextArea textArea = new JTextArea(eventList.toString()); // Eklendi
-			                JScrollPane scrollPane = new JScrollPane(textArea); // Eklendi
-			                textArea.setLineWrap(true); // Eklendi
-			                textArea.setWrapStyleWord(true); // Eklendi
-			                scrollPane.setPreferredSize(new java.awt.Dimension(380, 300)); // Eklendi
-			                JOptionPane.showMessageDialog(frame, scrollPane, "Event List", // Eklendi
-			                                              JOptionPane.INFORMATION_MESSAGE); // Eklendi
-			            } // Eklendi
-			        }); // Eklendi
+			        JButton listEventsButton = new JButton("List Events"); 
+			        listEventsButton.addActionListener(new ActionListener() { 
+			            @Override 
+			            public void actionPerformed(ActionEvent e) { 
+			                List<Event> events = eventFacade.getAllEvents(); 
+			                StringBuilder eventList = new StringBuilder(); 
+			                for (Event event : events) { 
+			                    eventList.append(event.getName()).append(", ").append(event.getDate()) 
+			                             .append(", ").append(event.getLocation()).append(", ") 
+			                             .append(event.getDescription()).append("\n"); 
+			                } 
+			                JTextArea textArea = new JTextArea(eventList.toString()); 
+			                JScrollPane scrollPane = new JScrollPane(textArea);
+			                textArea.setLineWrap(true); 
+			                textArea.setWrapStyleWord(true); 
+			                scrollPane.setPreferredSize(new java.awt.Dimension(380, 300)); 
+			                JOptionPane.showMessageDialog(frame, scrollPane, "Event List", 
+			                                              JOptionPane.INFORMATION_MESSAGE); 
+			            } 
+			        }); 
 
-			        JButton createScheduleButton = new JButton("Create Schedule"); // Eklendi
-			        createScheduleButton.addActionListener(new ActionListener() { // Eklendi
-			            @Override // Eklendi
-			            public void actionPerformed(ActionEvent e) { // Eklendi
-			                JTextField scheduleActivityField = new JTextField(10); // Eklendi
-			                JTextField scheduleTimeField = new JTextField(10); // Eklendi
+			        JButton createScheduleButton = new JButton("Create Schedule"); 
+			        createScheduleButton.addActionListener(new ActionListener() { 
+			            @Override 
+			            public void actionPerformed(ActionEvent e) { 
+			                JTextField scheduleActivityField = new JTextField(10); 
+			                JTextField scheduleTimeField = new JTextField(10); 
 
-			                JPanel panel = new JPanel(); // Eklendi
-			                panel.add(new JLabel("Activity:")); // Eklendi
-			                panel.add(scheduleActivityField); // Eklendi
-			                panel.add(new JLabel("Time:")); // Eklendi
-			                panel.add(scheduleTimeField); // Eklendi
+			                JPanel panel = new JPanel(); 
+			                panel.add(new JLabel("Activity:"));
+			                panel.add(scheduleActivityField); 
+			                panel.add(new JLabel("Time:")); 
+			                panel.add(scheduleTimeField); 
 
-			                int result = JOptionPane.showConfirmDialog(null, panel, // Eklendi
-			                        "Enter Schedule Details", JOptionPane.OK_CANCEL_OPTION); // Eklendi
-			                if (result == JOptionPane.OK_OPTION) { // Eklendi
-			                    Schedule schedule = new Schedule(scheduleActivityField.getText(), // Eklendi
-			                            scheduleTimeField.getText()); // Eklendi
-			                    eventFacade.planSchedule(schedule); // Eklendi
-			                    JOptionPane.showMessageDialog(frame, "Schedule Created!"); // Eklendi
-			                } // Eklendi
-			            } // Eklendi
-			        }); // Eklendi
+			                int result = JOptionPane.showConfirmDialog(null, panel, 
+			                        "Enter Schedule Details", JOptionPane.OK_CANCEL_OPTION); 
+			                if (result == JOptionPane.OK_OPTION) { 
+			                    Schedule schedule = new Schedule(scheduleActivityField.getText(), 
+			                            scheduleTimeField.getText());
+			                    eventFacade.planSchedule(schedule); 
+			                    JOptionPane.showMessageDialog(frame, "Schedule Created!"); 
+			                }
+			            } 
+			        }); 
 
-			        JButton listSchedulesButton = new JButton("List Schedules"); // Eklendi
-			        listSchedulesButton.addActionListener(new ActionListener() { // Eklendi
-			            @Override // Eklendi
-			            public void actionPerformed(ActionEvent e) { // Eklendi
-			                List<Schedule> schedules = eventFacade.getAllSchedules(); // Eklendi
-			                StringBuilder scheduleList = new StringBuilder(); // Eklendi
-			                for (Schedule schedule : schedules) { // Eklendi
-			                    scheduleList.append(schedule.getActivity()).append(", ") // Eklendi
-			                                 .append(schedule.getTime()).append("\n"); // Eklendi
-			                } // Eklendi
-			                JTextArea textArea = new JTextArea(scheduleList.toString()); // Eklendi
-			                JScrollPane scrollPane = new JScrollPane(textArea); // Eklendi
-			                textArea.setLineWrap(true); // Eklendi
-			                textArea.setWrapStyleWord(true); // Eklendi
-			                scrollPane.setPreferredSize(new java.awt.Dimension(380, 300)); // Eklendi
-			                JOptionPane.showMessageDialog(frame, scrollPane, "Schedule List", // Eklendi
-			                        JOptionPane.INFORMATION_MESSAGE); // Eklendi
-			            } // Eklendi
-			        }); // Eklendi
-			        newFrame.getContentPane().add(createScheduleButton); // Eklendi
-			        newFrame.getContentPane().add(listSchedulesButton); // Eklendi
+			        JButton listSchedulesButton = new JButton("List Schedules"); 
+			        listSchedulesButton.addActionListener(new ActionListener() {
+			            @Override 
+			            public void actionPerformed(ActionEvent e) { 
+			                List<Schedule> schedules = eventFacade.getAllSchedules(); 
+			                StringBuilder scheduleList = new StringBuilder(); 
+			                for (Schedule schedule : schedules) { 
+			                    scheduleList.append(schedule.getActivity()).append(", ") 
+			                                 .append(schedule.getTime()).append("\n"); 
+			                } 
+			                JTextArea textArea = new JTextArea(scheduleList.toString()); 
+			                JScrollPane scrollPane = new JScrollPane(textArea); 
+			                textArea.setLineWrap(true); 
+			                textArea.setWrapStyleWord(true); 
+			                scrollPane.setPreferredSize(new java.awt.Dimension(380, 300)); 
+			                JOptionPane.showMessageDialog(frame, scrollPane, "Schedule List", 
+			                        JOptionPane.INFORMATION_MESSAGE); 
+			            } 
+			        }); 
+			        newFrame.getContentPane().add(createScheduleButton); 
+			        newFrame.getContentPane().add(listSchedulesButton); 
 			        newFrame.getContentPane().add(createEventButton);
-			        newFrame.getContentPane().add(listEventsButton); // Eklendi
+			        newFrame.getContentPane().add(listEventsButton); 
 			        newFrame.setLayout(new java.awt.FlowLayout());
 			        newFrame.setVisible(true);
 				}
